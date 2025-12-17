@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ETHERIA | The Architecture of Your Soul</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Inter:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              serif: ['"Cormorant Garamond"', 'serif'], // Dùng cho Tiêu đề lớn
+              reading: ['"Lora"', 'serif'], // Dùng cho nội dung bài đọc (Insight)
+              sans: ['Inter', 'sans-serif'], // Dùng cho UI/Button
+            },
+            colors: {
+              stone: {
+                50: '#FDFCFB', // Warmer paper white
+                100: '#F5F4F1',
+                200: '#E6E4DF',
+                300: '#D5D1CB',
+                400: '#A7A29A',
+                500: '#79736B',
+                600: '#58524B',
+                700: '#453F39',
+                800: '#282521',
+                900: '#141210', // Deep/Rich Black-Brown
+              },
+              primary: {
+                DEFAULT: '#C6A87C', // Muted Gold
+                light: '#F2E8DA', 
+                dark: '#9A815C', 
+              },
+            },
+            animation: {
+              'fade-in': 'fadeIn 0.8s ease-out forwards',
+              'slide-up': 'slideUp 0.8s ease-out forwards',
+              'slide-in-right': 'slideInRight 0.5s ease-out forwards',
+            },
+            keyframes: {
+              fadeIn: {
+                '0%': { opacity: '0' },
+                '100%': { opacity: '1' },
+              },
+              slideUp: {
+                '0%': { transform: 'translateY(30px)', opacity: '0' },
+                '100%': { transform: 'translateY(0)', opacity: '1' },
+              },
+              slideInRight: {
+                '0%': { transform: 'translateX(20px)', opacity: '0' },
+                '100%': { transform: 'translateX(0)', opacity: '1' },
+              }
+            }
+          },
+        },
+      }
+    </script>
+    <style>
+      @media print {
+        .no-print {
+          display: none !important;
+        }
+        body {
+          background-color: white !important;
+          color: black !important;
+        }
+        /* Ensure background colors/images are printed */
+        * {
+          -webkit-print-color-adjust: exact !important;
+          print-color-adjust: exact !important;
+        }
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "lucide-react": "https://esm.sh/lucide-react@^0.561.0",
+    "react/": "https://esm.sh/react@^19.2.3/",
+    "react": "https://esm.sh/react@^19.2.3",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.3/"
+  }
+}
+</script>
+</head>
+  <body class="bg-stone-50 text-stone-900 antialiased font-sans selection:bg-stone-800 selection:text-stone-50">
+    <div id="root"></div>
+  </body>
+</html>
