@@ -1,15 +1,51 @@
 import { ArchetypeID, SubNeedID, QuizQuestion, ArchetypeResult, ProductRecommendation } from './types';
 
-// Helper for generic images
-const IMG_STONE_RED = "https://images.unsplash.com/photo-1615486511484-92e172cc416d?auto=format&fit=crop&q=80&w=400";
-const IMG_STONE_PINK = "https://images.unsplash.com/photo-1596908181055-e2e04f48b8d6?auto=format&fit=crop&q=80&w=400";
-const IMG_STONE_YELLOW = "https://images.unsplash.com/photo-1599643478518-17488fbbcd75?auto=format&fit=crop&q=80&w=400";
-const IMG_STONE_PURPLE = "https://images.unsplash.com/photo-1568205612837-0172ef5d94b4?auto=format&fit=crop&q=80&w=400";
-const IMG_STONE_BLUE = "https://images.unsplash.com/photo-1590595906931-81f04f0ccebb?auto=format&fit=crop&q=80&w=400";
-const IMG_WOOD = "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&q=80&w=400";
-const IMG_CANDLE = "https://images.unsplash.com/photo-1603006905003-be475563bc59?auto=format&fit=crop&q=80&w=400";
-const IMG_INCENSE = "https://images.unsplash.com/photo-1609156291350-f38b2511054a?auto=format&fit=crop&q=80&w=400";
+// ============================================
+// REAL SHOPIFY CDN IMAGES
+// ============================================
+const IMG = {
+  // Pixiu Series
+  TIGER_EYE_PIXIU: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/3_d4ff1a0f-05e7-4444-b002-18aaf59bf6dc.webp?v=1765438479",
+  PIXIU_YELLOW: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/product-christmas-yellow-pixiu_3ad6e8e7-cb1a-4e75-9081-4b42fa40ae87.png?v=1765438479",
+  PIXIU_WHITE: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/product-christmas-white-pixiu_cd3a97b9-bb20-4c82-bbf4-e76a036dbda0.png?v=1765438477",
+  PIXIU_GREEN: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/product-christmas-green-pixiu.png?v=1765438475",
+  
+  // Fox Queen Series
+  FOX_YELLOW: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/product-christmas-yellow-fox.png?v=1765438474",
+  FOX_GREEN: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/product-christmas-green-leaf_fbd27dc1-1bd5-460f-8fb9-3a1caebc688c.png?v=1765438472",
+  CATS_EYE_FOX: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/2_b93db039-aa67-486c-8ec7-b0ed1f29c05a.webp?v=1765438469",
+  
+  // Zodiac Series
+  ZODIAC_ALIGNMENT: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/Rotate_the_Zodiac_Alignment_Bracelet_Natural_Stone-1765359162700_c3c9685b-9dfa-4c7a-9e0a-d96f468de782.webp?v=1765451007",
+  MIXED_ZODIAC: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/Center_the_Zodiac_Alignment_Bracelet_on_a_pure_whi-1765360109294.webp?v=1765736301",
+  PREMIUM_ZODIAC: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/Edit_the_image_of_the_Premium_Zodiac_Power_Bracele-1765359178224.webp?v=1765360309",
+  OBSIDIAN_ZODIAC: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/Adjust_the_angle_of_the_Premium_Zodiac_Power_Brace-1765422221301.webp?v=1765422328",
+  ZODIAC_ENERGY: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/1_Center_the_Zodiac_Energy_Bracelet_Mixed_Natural-1765359016621.webp?v=1765360282",
+  
+  // Healing & Energy
+  HEALING_NECKLACE: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/Rotate_the_Healing_Necklace_Natural_Stone_Titanium-1765359125932_dcbd442e-e614-4c1a-9ee4-37852d5c87a8.webp?v=1765451228",
+  ENERGY_SET: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/Adjust_the_orientation_of_the_Energy_Alignment_Jew-1765359149137.webp?v=1765360828",
+  CHAKRA_BALANCE: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/1_Center_the_Chakra_Balance_Bracelet_Mixed_Stones-1765359038520.webp?v=1765360685",
+  CHAKRA_7: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/Center_the_7_Chakra_Healing_Bracelet_Natural_Stone-1765421830658.webp?v=1765451181",
+  QUARTZ_CUFF: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/1_Center_the_Crystal_Point_Energy_Amplifier_Quart-1765359025524_9bbc14c2-252f-4b39-b6e5-0e80c37c0ca4.webp?v=1765450916",
+  
+  // Grounding & Protection
+  AGARWOOD: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/Rotate_the_Grounding_Healing_Bracelet_Agarwood_in_-1765359155182_7846ba7a-95d4-45b9-8664-c3a02c419b97.webp?v=1765451158",
+  NINE_EYE_DZI: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/Center_the_Nine-Eye_Dzi_Bead_Power_Bracelet_made_o-1765359060310_14d0a737-eaac-4b5d-8efc-2a2509c6e87f.webp?v=1765451072",
+  
+  // Fortune & Abundance
+  FIRE_HORSE_STRING: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/Rotate_the_Fortune_Bracelet_Red_String_Fire_Horse_-1765359093284.webp?v=1765360579",
+  FIRE_HORSE_AGATE: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/Rotate_the_Fire_Horse_Fortune_Bracelet_Red_Agate_t-1765359231322.webp?v=1765360621",
+  FOUR_LEAF_CLOVER: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/7_9fb35c29-3754-4e89-84aa-3d10ff5cdb6d.webp?v=1765438470",
+  EMERALD_SET: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/Adjust_the_orientation_of_the_Solar_Energy_Protect-1765359139601.webp?v=1765431384",
+  
+  // Guidance
+  TAROT_NECKLACE: "https://cdn.shopify.com/s/files/1/0977/7027/5097/files/1_Center_the_Tarot_Guidance_Necklace_Titanium_Nat-1765359045414.webp?v=1765360386",
+};
 
+// ============================================
+// ARCHETYPES
+// ============================================
 export const ARCHETYPES: Record<ArchetypeID, ArchetypeResult> = {
   [ArchetypeID.Protector]: {
     id: ArchetypeID.Protector,
@@ -25,23 +61,23 @@ export const ARCHETYPES: Record<ArchetypeID, ArchetypeResult> = {
     
     chakra: "Root Chakra",
     chakraMeaning: "The Root Chakra (Muladhara) is your center of safety, survival, and belonging. It governs your right to exist and take up space.",
-    chakraUpsell: { name: "Red Jasper Grounding Stone", description: "Awakens dormant vitality.", image: IMG_STONE_RED },
+    chakraUpsell: { name: "Tiger Eye Pixiu Bracelet", description: "Ultimate guardian talisman for protection & wealth.", image: IMG.TIGER_EYE_PIXIU },
     
     element: "Earth",
     elementMeaning: "Earth energy is dense, physical, and slow-moving. It provides the container for all other elements to exist.",
-    elementUpsell: { name: "Petrified Wood Slab", description: "Ancient earth wisdom for the home.", image: IMG_WOOD },
+    elementUpsell: { name: "Grounding Healing Bracelet Agarwood", description: "Ancient wood energy to root you deeply.", image: IMG.AGARWOOD },
     
     symbol: "The Mountain",
     symbolMeaning: "The Mountain represents immovable presence. It witnesses the changing weather without being altered by it.",
-    symbolUpsell: { name: "Black Onyx Pyramid", description: "Geometric stability for your desk.", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=400" }
+    symbolUpsell: { name: "Nine-Eye Dzi Bead Power Bracelet", description: "Tibetan protection symbol with Black Onyx.", image: IMG.NINE_EYE_DZI }
   },
   [ArchetypeID.Heart]: {
     id: ArchetypeID.Heart,
     name: "Heart Aligner",
     title: "The Heart Aligner",
     description: "You are the emotional alchemist. A nurturer and connector, you navigate the world through deep empathy, authenticity, and the wisdom of feeling.",
-    patternInsight: "PATTERN I — THE FREQUENCY\n\nYou operate with a 'Third Ear,' hearing the emotional texture beneath words. Your nature is fluid like Water—adaptable, deep, and healing. You do not fear the dark waters of emotion; you know that is where the pearl is found.\n\nPATTERN II — THE RELATIONSHIP\n\nIntimacy is your oxygen. You are the 'Mirror' that reflects people’s truth back to them with compassion. You bind communities together, instinctively knowing how to weave disparate threads into a tapestry of belonging.\n\nPATTERN III — THE CONTRIBUTION\n\nYou lead through 'Inspirational Empathy.' You build cultures of trust where vulnerability is seen as strength. Your superpower is transforming sterile environments into spaces of genuine human connection.",
-    blindSpot: "BLOCK I — THE SPONGE\n\nYour boundary is permeable. You do not just witness emotion; you absorb it. When the room is heavy, you become heavy. You often lose the edges of where you end and others begin.\n\nBLOCK II — EMPATHY FATIGUE\n\nTo survive the noise of others' needs, you may periodically shut down, withdrawing into numbness. This creates a painful cycle of over-giving followed by guilt-ridden retreat.\n\nBLOCK III — PATH TO EQUILIBRIUM\n\nYou must develop 'Compassionate Detachment.' Validating another’s experience does not require carrying it for them. Your empathy is a gift, not a sentence.",
+    patternInsight: "PATTERN I — THE FREQUENCY\n\nYou operate with a 'Third Ear,' hearing the emotional texture beneath words. Your nature is fluid like Water—adaptable, deep, and healing. You do not fear the dark waters of emotion; you know that is where the pearl is found.\n\nPATTERN II — THE RELATIONSHIP\n\nIntimacy is your oxygen. You are the 'Mirror' that reflects people's truth back to them with compassion. You bind communities together, instinctively knowing how to weave disparate threads into a tapestry of belonging.\n\nPATTERN III — THE CONTRIBUTION\n\nYou lead through 'Inspirational Empathy.' You build cultures of trust where vulnerability is seen as strength. Your superpower is transforming sterile environments into spaces of genuine human connection.",
+    blindSpot: "BLOCK I — THE SPONGE\n\nYour boundary is permeable. You do not just witness emotion; you absorb it. When the room is heavy, you become heavy. You often lose the edges of where you end and others begin.\n\nBLOCK II — EMPATHY FATIGUE\n\nTo survive the noise of others' needs, you may periodically shut down, withdrawing into numbness. This creates a painful cycle of over-giving followed by guilt-ridden retreat.\n\nBLOCK III — PATH TO EQUILIBRIUM\n\nYou must develop 'Compassionate Detachment.' Validating another's experience does not require carrying it for them. Your empathy is a gift, not a sentence.",
     affirmation: "My heart is a garden, not a public park. I choose who enters.",
     color: "bg-rose-300",
     textColor: "text-rose-700",
@@ -49,15 +85,15 @@ export const ARCHETYPES: Record<ArchetypeID, ArchetypeResult> = {
     
     chakra: "Heart Chakra",
     chakraMeaning: "The Heart Chakra (Anahata) is the bridge between the physical and spiritual. It governs compassion, self-love, and acceptance.",
-    chakraUpsell: { name: "Rose Quartz Pendant", description: "Opens the heart to unconditional love.", image: IMG_STONE_PINK },
+    chakraUpsell: { name: "Healing Necklace Natural Stone", description: "Heart chakra activation pendant.", image: IMG.HEALING_NECKLACE },
 
     element: "Water",
     elementMeaning: "Water is the element of emotion and subconscious flow. It is adaptable, cleansing, and essential for life.",
-    elementUpsell: { name: "Moon Water Vessel", description: "Charge your water with lunar energy.", image: "https://images.unsplash.com/photo-1547844073-41d99047071e?auto=format&fit=crop&q=80&w=400" },
+    elementUpsell: { name: "7 Chakra Healing Bracelet", description: "Complete energy alignment for empaths.", image: IMG.CHAKRA_7 },
 
     symbol: "The Lotus",
     symbolMeaning: "The Lotus rises from the mud to bloom in the sun, symbolizing the alchemy of turning pain into wisdom.",
-    symbolUpsell: { name: "Lotus Oil Diffuser", description: "Scent therapy for emotional release.", image: IMG_INCENSE }
+    symbolUpsell: { name: "Energy Alignment Jewelry Set", description: "Full harmonization set for emotional balance.", image: IMG.ENERGY_SET }
   },
   [ArchetypeID.Abundance]: {
     id: ArchetypeID.Abundance,
@@ -73,15 +109,15 @@ export const ARCHETYPES: Record<ArchetypeID, ArchetypeResult> = {
     
     chakra: "Solar Plexus",
     chakraMeaning: "The Solar Plexus (Manipura) is the engine of will, ego, and action. It is where you digest life and assert your power.",
-    chakraUpsell: { name: "Citrine Point", description: "The merchant's stone for wealth.", image: IMG_STONE_YELLOW },
+    chakraUpsell: { name: "Fortune Bracelet Red String Fire Horse", description: "Manifestation accelerator with Fire Horse charm.", image: IMG.FIRE_HORSE_STRING },
 
     element: "Fire",
     elementMeaning: "Fire is the transformer. It consumes the old to create the new, providing heat, light, and inspiration.",
-    elementUpsell: { name: "Solar Candle (Bergamot)", description: "Ignite your daily intention.", image: IMG_CANDLE },
+    elementUpsell: { name: "Lucky Pixiu Stone Yellow", description: "Wealth protection talisman.", image: IMG.PIXIU_YELLOW },
 
     symbol: "The Sun",
     symbolMeaning: "The Sun represents masculine, outward-facing energy. It is visible, radiant, and life-giving.",
-    symbolUpsell: { name: "Gold Sun Amulet", description: "Wearable radiance.", image: "https://images.unsplash.com/photo-1602173575265-f515024d9c49?auto=format&fit=crop&q=80&w=400" }
+    symbolUpsell: { name: "Lucky Fox Queen Stone Yellow", description: "Social charisma enhancer for leaders.", image: IMG.FOX_YELLOW }
   },
   [ArchetypeID.Calm]: {
     id: ArchetypeID.Calm,
@@ -97,15 +133,15 @@ export const ARCHETYPES: Record<ArchetypeID, ArchetypeResult> = {
     
     chakra: "Crown Chakra",
     chakraMeaning: "The Crown Chakra (Sahasrara) connects you to the divine and the universal consciousness. It is pure awareness.",
-    chakraUpsell: { name: "Clear Quartz Sphere", description: "Master healer for mental clarity.", image: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&q=80&w=400" },
+    chakraUpsell: { name: "Premium Zodiac Power Bracelet", description: "Personal frequency harmonizer.", image: IMG.PREMIUM_ZODIAC },
 
     element: "Air/Water",
     elementMeaning: "A unique blend of Air (intellect/breath) and Water (flow). You exist in the mist—soft but pervasive.",
-    elementUpsell: { name: "Wind Chime", description: "Clears stagnant energy from the home.", image: "https://images.unsplash.com/photo-1516962215378-7fa2e137ae91?auto=format&fit=crop&q=80&w=400" },
+    elementUpsell: { name: "Zodiac Alignment Bracelet", description: "Energy centering for scattered minds.", image: IMG.ZODIAC_ALIGNMENT },
 
     symbol: "Still Water",
     symbolMeaning: "Still Water reflects the world perfectly. It represents a mind so quiet it can perceive the truth without distortion.",
-    symbolUpsell: { name: "Obsidian Scrying Mirror", description: "For deep inner reflection.", image: "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=400" }
+    symbolUpsell: { name: "Grounding Healing Bracelet Agarwood", description: "Anxiety reduction through wood energy.", image: IMG.AGARWOOD }
   },
   [ArchetypeID.Intuitive]: {
     id: ArchetypeID.Intuitive,
@@ -121,18 +157,21 @@ export const ARCHETYPES: Record<ArchetypeID, ArchetypeResult> = {
     
     chakra: "Third Eye",
     chakraMeaning: "The Third Eye (Ajna) governs intuition, foresight, and imagination. It sees beyond the physical veil.",
-    chakraUpsell: { name: "Lapis Lazuli Stone", description: "Unlock truth and inner wisdom.", image: IMG_STONE_BLUE },
+    chakraUpsell: { name: "Tarot Guidance Necklace", description: "Archetypal wisdom connector.", image: IMG.TAROT_NECKLACE },
 
     element: "Ether",
     elementMeaning: "Ether is space/spirit. It is the void from which all other elements manifest. It is pure potential.",
-    elementUpsell: { name: "Amethyst Cluster", description: "Purifies the spiritual atmosphere.", image: IMG_STONE_PURPLE },
+    elementUpsell: { name: "Cat's Eye Fox Queen Necklace", description: "Vision enhancement talisman.", image: IMG.CATS_EYE_FOX },
 
     symbol: "The Moon",
     symbolMeaning: "The Moon illuminates the dark. It represents cycles, shadows, and the feminine mystery of the subconscious.",
-    symbolUpsell: { name: "Moonstone Ring", description: "Enhances psychic sensitivity.", image: "https://images.unsplash.com/photo-1615486511269-e701e6a17b88?auto=format&fit=crop&q=80&w=400" }
+    symbolUpsell: { name: "Quartz Crystal Point Cuff", description: "Intention amplifier for mystics.", image: IMG.QUARTZ_CUFF }
   }
 };
 
+// ============================================
+// QUESTIONS
+// ============================================
 export const QUESTIONS: QuizQuestion[] = [
   // STAGE 1: Archetype Discovery
   {
@@ -140,11 +179,11 @@ export const QUESTIONS: QuizQuestion[] = [
     stage: 1,
     question: "When facing a major challenge, what is your instinctive reaction?",
     options: [
-      { id: 'A', text: "I plan carefully and take it step-by-step." }, // Protector
-      { id: 'B', text: "I listen to my emotions and intuition." }, // Heart
-      { id: 'C', text: "I look for opportunities to act immediately." }, // Abundance
-      { id: 'D', text: "I seek silence to find balance first." }, // Calm
-      { id: 'E', text: "I look for the hidden meaning or lesson." } // Intuitive (Mapped from C/Generic in CSV context, but E fits archetype)
+      { id: 'A', text: "I plan carefully and take it step-by-step." },
+      { id: 'B', text: "I listen to my emotions and intuition." },
+      { id: 'C', text: "I look for opportunities to act immediately." },
+      { id: 'D', text: "I seek silence to find balance first." },
+      { id: 'E', text: "I look for the hidden meaning or lesson." }
     ]
   },
   {
@@ -233,7 +272,6 @@ export const QUESTIONS: QuizQuestion[] = [
       { id: 'E', text: "Being trapped in the mundane." }
     ]
   },
-  // Q9: Zodiac Selection (Logic applied in utils/quizLogic.ts)
   {
     id: 9,
     stage: 3,
@@ -255,190 +293,364 @@ export const QUESTIONS: QuizQuestion[] = [
   }
 ];
 
-// Product Images (Placeholders using unsplash keywords to match the product type)
-const IMG_PIXIU = "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&q=80&w=800"; // Black stone
-const IMG_TIGER = "https://images.unsplash.com/photo-1602173574767-37ac01994b2a?auto=format&fit=crop&q=80&w=800"; // Brown/Gold stone
-const IMG_ROSE = "https://images.unsplash.com/photo-1596908181055-e2e04f48b8d6?auto=format&fit=crop&q=80&w=800"; // Pink stone
-const IMG_AMETHYST = "https://images.unsplash.com/photo-1568205612837-0172ef5d94b4?auto=format&fit=crop&q=80&w=800"; // Purple stone
-const IMG_CITRINE = "https://images.unsplash.com/photo-1599643478518-17488fbbcd75?auto=format&fit=crop&q=80&w=800"; // Yellow stone
-const IMG_LABRADORITE = "https://images.unsplash.com/photo-1590595906931-81f04f0ccebb?auto=format&fit=crop&q=80&w=800"; // Blue/Grey sheen
-const IMG_7CHAKRA = "https://images.unsplash.com/photo-1605648916361-9bc12ad6a569?auto=format&fit=crop&q=80&w=800"; // Colorful
-
-// MAPPED FROM CSV DATA
+// ============================================
+// PRODUCT_MATRIX - Fully Mapped from CSV
+// ============================================
 export const PRODUCT_MATRIX: Record<ArchetypeID, Record<SubNeedID, ProductRecommendation>> = {
   
   // === GROUNDED PROTECTOR (Earth) ===
-  // Primary: Protection, Stability
   [ArchetypeID.Protector]: {
     [SubNeedID.Protection]: { 
       id: 'gp1', 
       name: 'Tiger Eye Pixiu Bracelet', 
       type: 'Primary', 
+      price: '$99',
       description: 'The ultimate guardian talisman. Tiger Eye grounds your energy while the Pixiu mythology offers protection from financial and energetic loss.', 
       ritual: 'Wear on the left hand to welcome stability and shield your aura from chaotic environments.',
-      image: IMG_TIGER, 
-      tags: [SubNeedID.Protection, SubNeedID.Confidence] 
+      image: IMG.TIGER_EYE_PIXIU, 
+      tags: [SubNeedID.Protection],
+      upsells: [
+        { id: 'gp1-up1', name: 'Grounding Healing Bracelet Agarwood', price: '$49', description: 'Ancient wood energy to root you deeply into the earth.', image: IMG.AGARWOOD, type: 'Supportive', tags: [SubNeedID.Protection], ritual: 'Rub to release grounding scent.' },
+        { id: 'gp1-up2', name: 'Obsidian Lava Stone Zodiac Protection', price: '$59', description: 'Use during difficult days as a reminder of your grounded nature.', image: IMG.OBSIDIAN_ZODIAC, type: 'Supportive', tags: [SubNeedID.Protection], ritual: 'Wear for stability.' },
+        { id: 'gp1-up3', name: 'Nine-Eye Dzi Bead Power Bracelet', price: '$69', description: 'Maintain your "mountain" energy—unmoved and solid.', image: IMG.NINE_EYE_DZI, type: 'Supportive', tags: [SubNeedID.Protection], ritual: 'Wear during conflict.' }
+      ]
     },
     [SubNeedID.Confidence]: { 
-      id: 'gp2', 
-      name: 'Grounding Healing Bracelet Agarwood', 
+      id: 'gp-conf-1', 
+      name: 'Tiger Eye Pixiu Bracelet', 
       type: 'Primary', 
-      description: 'Ancient wood energy to root you deeply into the earth. Promotes a sense of calm authority and steadfast presence.', 
-      ritual: 'Rub the beads when you feel unmoored to release the grounding scent and center your mind.',
-      image: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&q=80&w=800", 
-      tags: [SubNeedID.Calm, SubNeedID.Confidence] 
+      price: '$99',
+      description: 'Wear when you need to project authority and inner strength.', 
+      ritual: 'Hold the stone while setting intentions for success.',
+      image: IMG.TIGER_EYE_PIXIU, 
+      tags: [SubNeedID.Confidence],
+      upsells: [
+        { id: 'gp-conf-2', name: 'Grounding Healing Bracelet Agarwood', price: '$49', description: 'Promotes a sense of calm authority and steadfast presence.', image: IMG.AGARWOOD, type: 'Supportive', tags: [SubNeedID.Confidence], ritual: 'Wear for authority.' }
+      ]
     },
     [SubNeedID.Calm]: { 
-      id: 'gp3', 
-      name: 'Nine-Eye Dzi Bead Onyx', 
+      id: 'gp-calm-1', 
+      name: 'Nine-Eye Dzi Bead Power Bracelet Black Onyx', 
       type: 'Primary', 
-      description: 'A powerful Tibetan symbol of protection combined with Black Onyx to absorb stress and negative thought patterns.', 
-      ritual: 'Use during difficult conversations to maintain your "mountain" energy—unmoved and solid.',
-      image: IMG_PIXIU, 
-      tags: [SubNeedID.Calm, SubNeedID.Protection] 
+      price: '$69',
+      description: 'Absorbs stress and negative thought patterns during meditation.', 
+      ritual: 'Use as a focal point during meditation.',
+      image: IMG.NINE_EYE_DZI, 
+      tags: [SubNeedID.Calm],
+      upsells: [
+        { id: 'gp-calm-2', name: 'Grounding Healing Bracelet Agarwood', price: '$49', description: 'Ancient wood energy to root you deeply into the earth.', image: IMG.AGARWOOD, type: 'Supportive', tags: [SubNeedID.Calm], ritual: 'Inhale scent for calm.' },
+        { id: 'gp-calm-sec', name: 'Zodiac Alignment Bracelet', price: '$49', description: 'Aligns your personal earth energy for emotional stability.', image: IMG.ZODIAC_ALIGNMENT, type: 'Supportive', tags: [SubNeedID.EmotionalBalance], ritual: 'Daily anchor.' }
+      ]
     },
-    // Fallbacks/Secondaries
-    [SubNeedID.EmotionalBalance]: { id: 'gp4', name: 'Zodiac Alignment Stone', type: 'Supportive', description: 'Aligns your personal earth energy.', ritual: 'Carry daily.', image: IMG_TIGER, tags: [] },
-    [SubNeedID.Intuition]: { id: 'gp5', name: 'Chakra Balance Mixed Stones', type: 'Supportive', description: 'Ensures your foundation supports your vision.', ritual: 'Meditation aid.', image: IMG_7CHAKRA, tags: [] },
+    [SubNeedID.EmotionalBalance]: { 
+      id: 'gp-em-1', 
+      name: 'Zodiac Alignment Bracelet Natural Stone', 
+      type: 'Primary', 
+      price: '$49',
+      description: 'Aligns your personal earth energy for emotional stability.', 
+      ritual: 'Carry daily as your energetic anchor.', 
+      image: IMG.ZODIAC_ALIGNMENT, 
+      tags: [SubNeedID.EmotionalBalance],
+      upsells: [
+        { id: 'gp-em-sec', name: 'Chakra Balance Bracelet', price: '$49', description: 'Ensures your foundation supports your vision.', image: IMG.CHAKRA_BALANCE, type: 'Supportive', tags: [SubNeedID.Intuition], ritual: 'Wear for balance.' }
+      ]
+    },
+    [SubNeedID.Intuition]: { 
+      id: 'gp-int-1', 
+      name: 'Chakra Balance Bracelet Mixed Stones', 
+      type: 'Primary', 
+      price: '$49',
+      description: 'Ensures your foundation supports your vision.', 
+      ritual: 'Meditation aid for grounded intuition.', 
+      image: IMG.CHAKRA_BALANCE, 
+      tags: [SubNeedID.Intuition],
+       upsells: [
+        { id: 'gp-int-sec', name: 'Zodiac Alignment Bracelet', price: '$49', description: 'Aligns your personal earth energy.', image: IMG.ZODIAC_ALIGNMENT, type: 'Supportive', tags: [SubNeedID.EmotionalBalance], ritual: 'Grounding tool.' }
+      ]
+    },
   },
 
   // === HEART ALIGNER (Water) ===
-  // Primary: Emotional Balance, Connection
   [ArchetypeID.Heart]: {
     [SubNeedID.EmotionalBalance]: { 
-      id: 'ha1', 
-      name: 'Healing Necklace Natural Stone', 
+      id: 'ha-em-1', 
+      name: 'Healing Necklace Natural Stone Titanium Chain', 
       type: 'Primary', 
-      description: 'A conduit for pure heart energy. This piece sits over the heart chakra, facilitating the flow of compassion and self-forgiveness.', 
-      ritual: 'Hold the stone to your heart when you feel overwhelmed by others\' emotions to reset your boundary.',
-      image: IMG_ROSE, 
-      tags: [SubNeedID.EmotionalBalance] 
+      price: '$79',
+      description: 'Hold the stone to your heart when overwhelmed by others\' emotions to reset your boundary.', 
+      ritual: 'Wear over the heart chakra daily.',
+      image: IMG.HEALING_NECKLACE, 
+      tags: [SubNeedID.EmotionalBalance],
+      upsells: [
+        { id: 'ha-em-2', name: 'Chakra Balance Bracelet Mixed Stones', price: '$49', description: 'Visualize light moving through each chakra.', image: IMG.CHAKRA_BALANCE, type: 'Supportive', tags: [SubNeedID.EmotionalBalance], ritual: 'Morning visualization.' },
+        { id: 'ha-em-3', name: '7 Chakra Healing Bracelet', price: '$49', description: 'Align all energy centers so empathy remains a gift.', image: IMG.CHAKRA_7, type: 'Supportive', tags: [SubNeedID.EmotionalBalance], ritual: 'Wear for alignment.' },
+        { id: 'ha-em-4', name: 'Energy Alignment Jewelry Set', price: '$119', description: 'Complete harmonization set for heart-centered souls.', image: IMG.ENERGY_SET, type: 'Supportive', tags: [SubNeedID.EmotionalBalance], ritual: 'Full ritual wear.' }
+      ]
     },
     [SubNeedID.Protection]: { 
-      id: 'ha2', 
-      name: '7 Chakra Healing Balance', 
+      id: 'ha-prot-1', 
+      name: '7 Chakra Healing Bracelet', 
       type: 'Primary', 
-      description: 'Aligns all energy centers so your empathy remains a gift, not a drain. Keeps your emotional flow clear and vibrant.', 
-      ritual: 'Visualize light moving through each color/chakra before starting your day.',
-      image: IMG_7CHAKRA, 
-      tags: [SubNeedID.Protection, SubNeedID.EmotionalBalance] 
+      price: '$49',
+      description: 'Keeps your emotional flow clear and vibrant while protecting from energy drain.', 
+      ritual: 'Touch each bead to seal your energy field.',
+      image: IMG.CHAKRA_7, 
+      tags: [SubNeedID.Protection],
+      upsells: [
+         { id: 'ha-prot-2', name: 'Chakra Balance Bracelet', price: '$49', description: 'Creates energetic boundary while maintaining heart openness.', image: IMG.CHAKRA_BALANCE, type: 'Supportive', tags: [SubNeedID.Protection], ritual: 'Protective wear.' }
+      ]
     },
     [SubNeedID.Intuition]: { 
-      id: 'ha3', 
-      name: 'Energy Alignment Set', 
+      id: 'ha-int-1', 
+      name: 'Energy Alignment Jewelry Set Titanium', 
       type: 'Primary', 
-      description: 'A curated set to harmonize your internal waters. Supports intuitive connection through emotional clarity.', 
-      ritual: 'Wear when you need to make decisions from a place of love, not fear.',
-      image: IMG_ROSE, 
-      tags: [SubNeedID.Intuition] 
+      price: '$119',
+      description: 'Wear when you need to make decisions from a place of love, not fear.', 
+      ritual: 'Adorn yourself before seeking guidance.',
+      image: IMG.ENERGY_SET, 
+      tags: [SubNeedID.Intuition],
+      upsells: [
+        { id: 'ha-calm-sec', name: 'Quartz Crystal Point Cuff', price: '$69', description: 'Amplifies healing energy for peaceful heart.', image: IMG.QUARTZ_CUFF, type: 'Supportive', tags: [SubNeedID.Calm], ritual: 'Amplify intentions.' }
+      ]
     },
-    // Fallbacks
-    [SubNeedID.Calm]: { id: 'ha4', name: 'Quartz Point Cuff', type: 'Supportive', description: 'Amplifies healing energy.', ritual: 'Morning intention.', image: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&q=80&w=800", tags: [] },
-    [SubNeedID.Confidence]: { id: 'ha5', name: 'Tarot Guidance Necklace', type: 'Supportive', description: 'Trust the wisdom of your heart.', ritual: 'Wear for self-trust.', image: "https://images.unsplash.com/photo-1630325326754-0062b083d25d?auto=format&fit=crop&q=80&w=800", tags: [] },
+    [SubNeedID.Calm]: { 
+      id: 'ha-calm-1', 
+      name: 'Quartz Crystal Point Cuff', 
+      type: 'Primary', 
+      price: '$69',
+      description: 'Amplifies healing energy for a peaceful heart.', 
+      ritual: 'Morning intention setting ritual.', 
+      image: IMG.QUARTZ_CUFF, 
+      tags: [SubNeedID.Calm],
+      upsells: [
+        { id: 'ha-conf-sec', name: 'Tarot Guidance Necklace', price: '$79', description: 'Trust the wisdom of your heart.', image: IMG.TAROT_NECKLACE, type: 'Supportive', tags: [SubNeedID.Confidence], ritual: 'Inner knowing.' }
+      ]
+    },
+    [SubNeedID.Confidence]: { 
+      id: 'ha-conf-1', 
+      name: 'Tarot Guidance Necklace', 
+      type: 'Primary', 
+      price: '$79',
+      description: 'Trust the wisdom of your heart.', 
+      ritual: 'Wear for self-trust and inner knowing.', 
+      image: IMG.TAROT_NECKLACE, 
+      tags: [SubNeedID.Confidence],
+      upsells: [
+         { id: 'ha-em-sec', name: 'Healing Necklace', price: '$79', description: 'Heart chakra activation.', image: IMG.HEALING_NECKLACE, type: 'Supportive', tags: [SubNeedID.EmotionalBalance], ritual: 'Emotional grounding.' }
+      ]
+    },
   },
 
   // === ABUNDANCE MOVER (Fire) ===
-  // Primary: Confidence, Growth
   [ArchetypeID.Abundance]: {
     [SubNeedID.Confidence]: { 
-      id: 'am1', 
-      name: 'Fortune Red String Fire Horse', 
+      id: 'am-conf-1', 
+      name: 'Fortune Bracelet Red String Fire Horse', 
       type: 'Primary', 
-      description: 'The Fire Horse represents unbridled passion and drive. Combined with the red string of fate, it accelerates manifestation.', 
-      ritual: 'Wear on your dominant hand to project your will and attract opportunity.',
-      image: "https://images.unsplash.com/photo-1602173575265-f515024d9c49?auto=format&fit=crop&q=80&w=800", 
-      tags: [SubNeedID.Confidence, SubNeedID.Protection] 
+      price: '$49',
+      description: 'Wear on your dominant hand to project your will and attract opportunity.', 
+      ritual: 'Activate with a specific goal in mind.',
+      image: IMG.FIRE_HORSE_STRING, 
+      tags: [SubNeedID.Confidence],
+      upsells: [
+        { id: 'am-conf-2', name: 'Fire Horse Fortune Bracelet Red Agate', price: '$59', description: 'Represents unbridled passion and drive for manifestation.', image: IMG.FIRE_HORSE_AGATE, type: 'Supportive', tags: [SubNeedID.Confidence], ritual: 'Wear for drive.' },
+        { id: 'am-conf-3', name: 'Lucky Pixiu Stone - Yellow', price: '$99', description: 'Place in workspace to guard your creative outputs.', image: IMG.PIXIU_YELLOW, type: 'Supportive', tags: [SubNeedID.Confidence], ritual: 'Workspace totem.' },
+        { id: 'am-conf-4', name: 'Lucky Fox Queen Stone - Yellow', price: '$99', description: 'Wear during negotiations to heighten social intuition.', image: IMG.FOX_YELLOW, type: 'Supportive', tags: [SubNeedID.Confidence], ritual: 'Negotiation aid.' }
+      ]
     },
     [SubNeedID.Protection]: { 
-      id: 'am2', 
-      name: 'Lucky Pixiu Stone (Yellow)', 
+      id: 'am-prot-1', 
+      name: 'Lucky Pixiu Stone - Yellow', 
       type: 'Primary', 
-      description: 'Yellow represents the solar plexus and wealth. The Pixiu protects your accumulated abundance from draining away.', 
-      ritual: 'Place in your workspace to guard your creative outputs and financial flow.',
-      image: IMG_CITRINE, 
-      tags: [SubNeedID.Protection, SubNeedID.Confidence] 
+      price: '$99',
+      description: 'Protects your accumulated abundance from draining away.', 
+      ritual: 'Place in your "wealth corner" (far left from door).',
+      image: IMG.PIXIU_YELLOW, 
+      tags: [SubNeedID.Protection],
+      upsells: [
+        { id: 'am-prot-2', name: 'Fortune Bracelet Red String', price: '$49', description: 'Red string of fate protects your manifestation journey.', image: IMG.FIRE_HORSE_STRING, type: 'Supportive', tags: [SubNeedID.Protection], ritual: 'Daily protection.' }
+      ]
     },
     [SubNeedID.Intuition]: { 
-      id: 'am3', 
-      name: 'Lucky Fox Queen (Yellow)', 
+      id: 'am-int-1', 
+      name: 'Lucky Fox Queen Stone - Yellow', 
       type: 'Primary', 
-      description: 'The Fox spirit brings cleverness, adaptability, and social charisma—essential for the visionary leader.', 
-      ritual: 'Wear during negotiations or networking to heighten your social intuition.',
-      image: IMG_CITRINE, 
-      tags: [SubNeedID.Intuition] 
+      price: '$99',
+      description: 'Brings cleverness, adaptability, and social charisma for visionary leaders.', 
+      ritual: 'Wear when networking.',
+      image: IMG.FOX_YELLOW, 
+      tags: [SubNeedID.Intuition],
+      upsells: [
+         { id: 'am-calm-sec', name: 'Emerald Titanium Gold Solar Set', price: '$69', description: 'Grounded growth with elegant solar energy.', image: IMG.EMERALD_SET, type: 'Supportive', tags: [SubNeedID.Calm], ritual: 'Wear for elegance.' }
+      ]
     },
-    // Fallbacks
-    [SubNeedID.Calm]: { id: 'am4', name: 'Emerald Titanium Set', type: 'Supportive', description: 'Grounded growth.', ritual: 'Wear for steady progress.', image: "https://images.unsplash.com/photo-1600607686527-6fb886090705?auto=format&fit=crop&q=80&w=800", tags: [] },
-    [SubNeedID.EmotionalBalance]: { id: 'am5', name: 'Four-Leaf Clover', type: 'Supportive', description: 'Luck and ease.', ritual: 'Carry for good fortune.', image: "https://images.unsplash.com/photo-1596908181055-e2e04f48b8d6?auto=format&fit=crop&q=80&w=800", tags: [] },
+    [SubNeedID.Calm]: { 
+      id: 'am-calm-1', 
+      name: 'Emerald Titanium Gold Solar Set', 
+      type: 'Primary', 
+      price: '$69',
+      description: 'Grounded growth with elegant solar energy.', 
+      ritual: 'Wear for steady progress and balanced ambition.', 
+      image: IMG.EMERALD_SET, 
+      tags: [SubNeedID.Calm],
+      upsells: [
+        { id: 'am-em-sec', name: 'Lucky Four-Leaf Clover Bracelet', price: '$49', description: 'Luck and ease for emotional harmony.', image: IMG.FOUR_LEAF_CLOVER, type: 'Supportive', tags: [SubNeedID.EmotionalBalance], ritual: 'Wear for ease.' }
+      ]
+    },
+    [SubNeedID.EmotionalBalance]: { 
+      id: 'am-em-1', 
+      name: 'LUCKY FOUR-LEAF CLOVER BRACELET', 
+      type: 'Primary', 
+      price: '$49',
+      description: 'Luck and ease for emotional harmony.', 
+      ritual: 'Carry for good fortune and lightness.', 
+      image: IMG.FOUR_LEAF_CLOVER, 
+      tags: [SubNeedID.EmotionalBalance],
+      upsells: [
+        { id: 'am-conf-sec', name: 'Fire Horse Fortune Bracelet', price: '$59', description: 'Passion and drive.', image: IMG.FIRE_HORSE_AGATE, type: 'Supportive', tags: [SubNeedID.Confidence], ritual: 'Wear for energy.' }
+      ]
+    },
   },
 
   // === CALM SEEKER (Air/Water) ===
-  // Primary: Calm, Peace
   [ArchetypeID.Calm]: {
     [SubNeedID.Calm]: { 
-      id: 'cs1', 
-      name: 'Premium Zodiac Power Bracelet', 
+      id: 'cs-calm-1', 
+      name: 'Zodiac Alignment Bracelet Natural Stone', 
       type: 'Primary', 
-      description: 'Deeply resonant stones chosen for your specific sign to harmonize your natural frequency and reduce internal static.', 
-      ritual: 'Use as a touchstone throughout the day. When you touch it, take one deep, conscious breath.',
-      image: IMG_AMETHYST, 
-      tags: [SubNeedID.Calm] 
+      price: '$49',
+      description: 'Use as a touchstone throughout the day. When you touch it, take one deep, conscious breath.', 
+      ritual: 'Touchstone for breathwork.',
+      image: IMG.ZODIAC_ALIGNMENT, 
+      tags: [SubNeedID.Calm],
+      upsells: [
+        { id: 'cs-calm-2', name: 'Mixed Stone Zodiac Symbol Bracelet', price: '$49', description: 'Harmonizes your natural frequency and reduces internal static.', image: IMG.MIXED_ZODIAC, type: 'Supportive', tags: [SubNeedID.Calm], ritual: 'Wear for harmony.' },
+        { id: 'cs-calm-3', name: 'Premium Zodiac Power Bracelet', price: '$69', description: 'Resonant stones chosen for your specific sign.', image: IMG.PREMIUM_ZODIAC, type: 'Supportive', tags: [SubNeedID.Calm], ritual: 'Power wear.' },
+        { id: 'cs-calm-4', name: 'Grounding Healing Bracelet Agarwood', price: '$49', description: 'Scent and wood energy to pull you out of your head.', image: IMG.AGARWOOD, type: 'Supportive', tags: [SubNeedID.Calm], ritual: 'Aromatherapy.' }
+      ]
     },
     [SubNeedID.EmotionalBalance]: { 
-      id: 'cs2', 
-      name: 'Zodiac Alignment Stone', 
+      id: 'cs-em-1', 
+      name: 'Zodiac Alignment Bracelet Natural Stone', 
       type: 'Primary', 
-      description: 'Brings your scattered energy back to its center. Acts as a ballast when the emotional waves get high.', 
+      price: '$49',
+      description: 'Brings your scattered energy back to its center.', 
       ritual: 'Place under your pillow to encourage peaceful, restorative sleep.',
-      image: "https://images.unsplash.com/photo-1615486511269-e701e6a17b88?auto=format&fit=crop&q=80&w=800", 
-      tags: [SubNeedID.EmotionalBalance, SubNeedID.Calm] 
+      image: IMG.ZODIAC_ALIGNMENT, 
+      tags: [SubNeedID.EmotionalBalance],
+      upsells: [
+         { id: 'cs-em-2', name: 'Premium Zodiac Power Bracelet', price: '$69', description: 'Resonant stones for your sign.', image: IMG.PREMIUM_ZODIAC, type: 'Supportive', tags: [SubNeedID.EmotionalBalance], ritual: 'Sleep aid.' }
+      ]
     },
     [SubNeedID.Protection]: { 
-      id: 'cs3', 
-      name: 'Grounding Agarwood', 
+      id: 'cs-prot-1', 
+      name: 'Grounding Healing Bracelet Agarwood', 
       type: 'Primary', 
-      description: 'Scent and wood energy to pull you out of your head and into your body, reducing anxiety and overthinking.', 
-      ritual: 'Wear when entering chaotic environments to maintain your "bubble" of peace.',
-      image: "https://images.unsplash.com/photo-1615655406736-b37c4fabf923?auto=format&fit=crop&q=80&w=800", 
-      tags: [SubNeedID.Protection, SubNeedID.Calm] 
+      price: '$49',
+      description: 'Wear when entering chaotic environments to maintain your "bubble" of peace.', 
+      ritual: 'Creates a protective scent barrier.',
+      image: IMG.AGARWOOD, 
+      tags: [SubNeedID.Protection],
+      upsells: [
+        { id: 'cs-conf-sec', name: 'Lucky Pixiu Stone - White', price: '$99', description: 'Pure clarity and protection for clear speech.', image: IMG.PIXIU_WHITE, type: 'Supportive', tags: [SubNeedID.Confidence], ritual: 'Clear speech.' }
+      ]
     },
-    // Fallbacks
-    [SubNeedID.Confidence]: { id: 'cs4', name: 'Lucky Pixiu (White)', type: 'Supportive', description: 'Pure clarity and protection.', ritual: 'Wear for clear speech.', image: IMG_PIXIU, tags: [] },
-    [SubNeedID.Intuition]: { id: 'cs5', name: 'Tarot Guidance', type: 'Supportive', description: 'Quiet wisdom.', ritual: 'Meditation focus.', image: "https://images.unsplash.com/photo-1630325326754-0062b083d25d?auto=format&fit=crop&q=80&w=800", tags: [] },
+    [SubNeedID.Confidence]: { 
+      id: 'cs-conf-1', 
+      name: 'Lucky Pixiu Stone - White', 
+      type: 'Primary', 
+      price: '$99',
+      description: 'Pure clarity and protection for clear speech.', 
+      ritual: 'Wear for confident, calm communication.', 
+      image: IMG.PIXIU_WHITE, 
+      tags: [SubNeedID.Confidence],
+      upsells: [
+        { id: 'cs-int-sec', name: 'Tarot Guidance Necklace', price: '$79', description: 'Quiet wisdom for meditation focus.', image: IMG.TAROT_NECKLACE, type: 'Supportive', tags: [SubNeedID.Intuition], ritual: 'Focus aid.' }
+      ]
+    },
+    [SubNeedID.Intuition]: { 
+      id: 'cs-int-1', 
+      name: 'Tarot Guidance Necklace', 
+      type: 'Primary', 
+      price: '$79',
+      description: 'Quiet wisdom for meditation focus.', 
+      ritual: 'Meditation and reflection companion.', 
+      image: IMG.TAROT_NECKLACE, 
+      tags: [SubNeedID.Intuition],
+      upsells: [
+        { id: 'cs-calm-sec', name: 'Zodiac Alignment Bracelet', price: '$49', description: 'Harmonizes frequency.', image: IMG.ZODIAC_ALIGNMENT, type: 'Supportive', tags: [SubNeedID.Calm], ritual: 'Daily harmony.' }
+      ]
+    },
   },
 
   // === INTUITIVE EXPLORER (Ether/Air) ===
-  // Primary: Intuition, Meaning
   [ArchetypeID.Intuitive]: {
     [SubNeedID.Intuition]: { 
-      id: 'ie1', 
-      name: 'Tarot Guidance Necklace', 
+      id: 'ie-int-1', 
+      name: 'Tarot Guidance Necklace Titanium', 
       type: 'Primary', 
-      description: 'A symbol of the mysteries you seek. connects you to archetypal wisdom and higher guidance.', 
-      ritual: 'Hold the pendant when seeking an answer. Trust the first image or word that comes to mind.',
-      image: "https://images.unsplash.com/photo-1630325326754-0062b083d25d?auto=format&fit=crop&q=80&w=800", 
-      tags: [SubNeedID.Intuition] 
+      price: '$79',
+      description: 'Hold the pendant when seeking an answer. Trust the first image or word that comes to mind.', 
+      ritual: 'Consult before big decisions.',
+      image: IMG.TAROT_NECKLACE, 
+      tags: [SubNeedID.Intuition],
+      upsells: [
+        { id: 'ie-int-2', name: 'CAT\'S EYE FOX QUEEN NECKLACE', price: '$89', description: 'Enhances vision in the dark, brings wit and adaptability.', image: IMG.CATS_EYE_FOX, type: 'Supportive', tags: [SubNeedID.Intuition], ritual: 'Night vision.' },
+        { id: 'ie-int-3', name: 'Quartz Crystal Point Cuff', price: '$69', description: 'Program this stone with a specific question before you wear it.', image: IMG.QUARTZ_CUFF, type: 'Supportive', tags: [SubNeedID.Intuition], ritual: 'Question programming.' },
+        { id: 'ie-int-4', name: 'Lucky Fox Queen Stone - Green', price: '$99', description: 'Fox spirit brings cleverness and mystical connection.', image: IMG.FOX_GREEN, type: 'Supportive', tags: [SubNeedID.Intuition], ritual: 'Nature connection.' }
+      ]
     },
     [SubNeedID.Confidence]: { 
-      id: 'ie2', 
-      name: 'Cat’s Eye Fox Queen', 
+      id: 'ie-conf-1', 
+      name: 'CAT\'S EYE FOX QUEEN NECKLACE', 
       type: 'Primary', 
-      description: 'The Cat’s Eye stone enhances vision in the dark, while the Fox brings wit and adaptability to your explorations.', 
-      ritual: 'Wear when exploring new ideas or places to stay sharp and protected.',
-      image: IMG_LABRADORITE, 
-      tags: [SubNeedID.Confidence, SubNeedID.Intuition] 
+      price: '$89',
+      description: 'Wear when exploring new ideas or places to stay sharp and protected.', 
+      ritual: 'Wear for travel or new ventures.',
+      image: IMG.CATS_EYE_FOX, 
+      tags: [SubNeedID.Confidence],
+      upsells: [
+         { id: 'ie-conf-2', name: 'Tarot Guidance Necklace', price: '$79', description: 'Connects you to archetypal wisdom.', image: IMG.TAROT_NECKLACE, type: 'Supportive', tags: [SubNeedID.Confidence], ritual: 'Wisdom connection.' }
+      ]
     },
     [SubNeedID.Calm]: { 
-      id: 'ie3', 
+      id: 'ie-calm-1', 
       name: 'Quartz Crystal Point Cuff', 
       type: 'Primary', 
-      description: 'Clear Quartz is the master amplifier. It acts as an antenna for your intentions, clarifying the mental noise.', 
-      ritual: 'Program this stone with a specific question before you wear it.',
-      image: "https://images.unsplash.com/photo-1596464716127-f2a82984de30?auto=format&fit=crop&q=80&w=800", 
-      tags: [SubNeedID.Calm, SubNeedID.Intuition] 
+      price: '$69',
+      description: 'Acts as an antenna for your intentions, clarifying the mental noise.', 
+      ritual: 'Wear for mental clarity.',
+      image: IMG.QUARTZ_CUFF, 
+      tags: [SubNeedID.Calm],
+      upsells: [
+        { id: 'ie-prot-sec', name: 'Lucky Fox Queen Stone - Green', price: '$99', description: 'Growth and safe travels.', image: IMG.FOX_GREEN, type: 'Supportive', tags: [SubNeedID.Protection], ritual: 'Travel safety.' }
+      ]
     },
-    // Fallbacks
-    [SubNeedID.Protection]: { id: 'ie4', name: 'Lucky Fox (Green)', type: 'Supportive', description: 'Growth and safe travels.', ritual: 'Wear on adventures.', image: IMG_LABRADORITE, tags: [] },
-    [SubNeedID.EmotionalBalance]: { id: 'ie5', name: 'Zodiac Energy Mixed', type: 'Supportive', description: 'Universal connection.', ritual: 'Daily grounding.', image: IMG_7CHAKRA, tags: [] },
+    [SubNeedID.Protection]: { 
+      id: 'ie-prot-1', 
+      name: 'Lucky Fox Queen Stone - Green', 
+      type: 'Primary', 
+      price: '$99',
+      description: 'Growth and safe travels on your spiritual adventures.', 
+      ritual: 'Wear on adventures for protection and insight.', 
+      image: IMG.FOX_GREEN, 
+      tags: [SubNeedID.Protection],
+      upsells: [
+        { id: 'ie-em-sec', name: 'Zodiac Energy Bracelet', price: '$49', description: 'Universal connection for emotional grounding.', image: IMG.ZODIAC_ENERGY, type: 'Supportive', tags: [SubNeedID.EmotionalBalance], ritual: 'Grounding.' }
+      ]
+    },
+    [SubNeedID.EmotionalBalance]: { 
+      id: 'ie-em-1', 
+      name: 'Zodiac Energy Bracelet Mixed Natural Stones', 
+      type: 'Primary', 
+      price: '$49',
+      description: 'Universal connection for emotional grounding.', 
+      ritual: 'Daily grounding for the mystical mind.', 
+      image: IMG.ZODIAC_ENERGY, 
+      tags: [SubNeedID.EmotionalBalance],
+      upsells: [
+        { id: 'ie-int-sec', name: 'Tarot Guidance Necklace', price: '$79', description: 'Trust the wisdom.', image: IMG.TAROT_NECKLACE, type: 'Supportive', tags: [SubNeedID.Intuition], ritual: 'Consultation.' }
+      ]
+    },
   }
 };

@@ -25,8 +25,8 @@ export interface QuizOption {
 
 export interface QuizQuestion {
   id: number;
+  stage: number;
   question: string;
-  stage: 1 | 2 | 3;
   options: QuizOption[];
 }
 
@@ -36,8 +36,10 @@ export interface ProductRecommendation {
   description: string;
   ritual: string; // Context on HOW/WHEN to use this item
   image: string; // URL placeholder
+  price: string;
   type: 'Primary' | 'Supportive';
   tags: SubNeedID[];
+  upsells?: ProductRecommendation[];
 }
 
 export interface UpsellItem {
