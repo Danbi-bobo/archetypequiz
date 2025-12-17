@@ -1,8 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { QUESTIONS } from '../constants';
 import { ArchetypeID, SubNeedID, QuizResult } from '../types';
 import { calculateArchetype, calculateSubNeed } from '../utils/quizLogic';
-import { ArrowLeft, Sparkles, ArrowRight, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, Minus } from 'lucide-react';
 import { Button } from './Button';
 
 interface QuizProps {
@@ -14,57 +14,14 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
   const [answers, setAnswers] = useState<{ questionId: number; optionId: string; mapsTo?: SubNeedID }[]>([]);
   const [isTransitioning, setIsTransitioning] = useState(false);
   
-  // Audio State
-  const [isMuted, setIsMuted] = useState(false);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
   // Email Capture State
   const [showEmailCapture, setShowEmailCapture] = useState(false);
   const [userEmail, setUserEmail] = useState('');
   const [emailError, setEmailError] = useState('');
 
-  // Initialize Audio
   useEffect(() => {
-    // Ambient track: "Relaxing Ambient"
-    const audioUrl = "https://cdn.pixabay.com/audio/2022/10/05/audio_68629b35db.mp3"; 
-    audioRef.current = new Audio(audioUrl);
-    audioRef.current.loop = true;
-    audioRef.current.volume = 0.4;
-
-    // Attempt to play automatically
-    const playPromise = audioRef.current.play();
-    if (playPromise !== undefined) {
-      playPromise.catch(error => {
-        console.log("Auto-play prevented by browser. User must interact first.");
-        setIsMuted(true); // Default to muted if autoplay fails
-      });
-    }
-
-    return () => {
-      if (audioRef.current) {
-        audioRef.current.pause();
-        audioRef.current = null;
-      }
-    };
-  }, []);
-
-  // Handle Mute Toggle
-  const toggleMute = () => {
-    if (audioRef.current) {
-      if (isMuted) {
-        audioRef.current.play();
-        audioRef.current.muted = false;
-      } else {
-        audioRef.current.muted = true;
-      }
-      setIsMuted(!isMuted);
-    }
-  };
-
-  // Scroll to top on mount
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentQIndex]);
 
   const currentQuestion = QUESTIONS[currentQIndex];
   const progress = ((currentQIndex + 1) / QUESTIONS.length) * 100;
@@ -80,11 +37,10 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
         setCurrentQIndex(currentQIndex + 1);
         setIsTransitioning(false);
       } else {
-        // End of Quiz: Show Email Capture instead of finishing immediately
         setShowEmailCapture(true);
         setIsTransitioning(false);
       }
-    }, 400);
+    }, 600); // Slower transition for calmness
   };
 
   const finishQuiz = (finalAnswers: typeof answers, email?: string) => {
@@ -118,7 +74,6 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
   const handleBack = () => {
     if (showEmailCapture) {
       setShowEmailCapture(false);
-      // Remove the last answer to go back to the state before the email capture triggered
       setAnswers(answers.slice(0, -1)); 
       setIsTransitioning(false);
       return;
@@ -129,49 +84,44 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
     }
   };
 
-  // Determine if this is the Zodiac question (ID 9) for specific grid layout
   const isZodiacQuestion = currentQuestion && currentQuestion.id === 9;
 
   // --- VIEW: EMAIL CAPTURE ---
   if (showEmailCapture) {
     return (
-      <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-6 md:p-12 relative overflow-hidden font-sans animate-fade-in">
-        {/* Background Ambience */}
-        <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-            <div className="absolute top-[-10%] right-[-5%] w-96 h-96 bg-stone-100 rounded-full blur-3xl opacity-60"></div>
-        </div>
-        
+      <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans animate-fade-in">
         <div className="max-w-md w-full relative z-10 text-center">
-          <div className="mb-8">
-             <span className="text-4xl text-stone-900 block mb-4 font-serif">📩</span>
-             <h2 className="text-3xl md:text-4xl font-serif text-stone-900 mb-4">Your Guide Awaits</h2>
-             <p className="text-stone-600 font-reading italic">
+          <div className="mb-12">
+             <h2 className="text-4xl md:text-5xl font-serif text-stone-900 mb-6 font-light italic">Your Guide Awaits</h2>
+             <p className="text-stone-600 font-reading leading-relaxed">
                Enter your email to receive your full energetic blueprint, ritual recommendations, and a copy of your results.
              </p>
           </div>
 
-          <form onSubmit={handleEmailSubmit} className="space-y-4">
-             <div>
+          <form onSubmit={handleEmailSubmit} className="space-y-8">
+             <div className="relative">
                <input 
                  type="email" 
                  placeholder="name@example.com"
-                 className="w-full p-4 bg-white border border-stone-200 focus:border-stone-900 outline-none transition-colors rounded-lg text-stone-900 placeholder:text-stone-400"
+                 className="w-full p-4 bg-transparent border-b border-stone-300 focus:border-stone-900 outline-none transition-colors text-stone-900 placeholder:text-stone-400 text-center font-serif text-xl"
                  value={userEmail}
                  onChange={(e) => { setUserEmail(e.target.value); setEmailError(''); }}
                />
-               {emailError && <p className="text-red-500 text-xs mt-2 text-left">{emailError}</p>}
+               {emailError && <p className="text-red-800 text-xs mt-4">{emailError}</p>}
              </div>
              
-             <Button type="submit" fullWidth className="py-4 uppercase tracking-widest text-xs font-bold shadow-lg">
-               Reveal My Results
-             </Button>
+             <div className="pt-4">
+                <Button type="submit" fullWidth className="py-4 uppercase tracking-[0.2em] text-xs font-medium bg-stone-900 text-stone-50 hover:bg-stone-800 transition-all duration-700">
+                  Reveal My Results
+                </Button>
+             </div>
           </form>
 
           <button 
             onClick={handleEmailSkip}
-            className="mt-6 text-xs text-stone-400 underline hover:text-stone-600 transition-colors uppercase tracking-wider"
+            className="mt-8 text-[10px] text-stone-400 hover:text-stone-600 transition-colors uppercase tracking-[0.15em]"
           >
-            Skip for now, show my results
+            Skip for now
           </button>
         </div>
       </div>
@@ -180,113 +130,83 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
 
   // --- VIEW: QUIZ ---
   return (
-    <div className="min-h-screen bg-stone-50 flex flex-col items-center justify-center p-4 md:p-12 relative overflow-hidden font-sans">
+    <div className="min-h-screen bg-stone-50 flex flex-col items-center relative overflow-hidden font-sans selection:bg-stone-200">
       
-       {/* Background Ambience */}
-       <div className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-hidden">
-          <div className="absolute top-[-10%] right-[-5%] w-96 h-96 bg-stone-100 rounded-full blur-3xl opacity-60"></div>
-          <div className="absolute bottom-[-10%] left-[-5%] w-96 h-96 bg-stone-100 rounded-full blur-3xl opacity-60"></div>
+       {/* Minimal Progress Line (Top) */}
+       <div className="absolute top-0 left-0 w-full h-[2px] bg-stone-100">
+          <div 
+              className="h-full bg-stone-800 transition-all duration-[1.5s] ease-out"
+              style={{ width: `${progress}%` }}
+          ></div>
        </div>
 
-       {/* Audio Toggle (Sticky) */}
-       <button 
-          onClick={toggleMute} 
-          className="absolute top-4 right-4 md:top-6 md:right-6 z-50 p-2 md:p-3 bg-white/50 backdrop-blur-sm rounded-full hover:bg-white transition-all text-stone-600 border border-stone-200 shadow-sm no-print"
-          title={isMuted ? "Unmute Ambient Music" : "Mute Ambient Music"}
-       >
-          {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
-       </button>
+       {/* Top Nav */}
+       <div className="w-full max-w-5xl mx-auto px-6 py-8 flex justify-between items-center relative z-20">
+          <button 
+            onClick={handleBack}
+            disabled={currentQIndex === 0}
+            className={`text-stone-400 hover:text-stone-900 transition-colors duration-500 ${currentQIndex === 0 ? 'opacity-0 pointer-events-none' : ''}`}
+          >
+             <ArrowLeft size={16} strokeWidth={1} />
+          </button>
 
-      <div className={`w-full relative z-10 ${isZodiacQuestion ? 'max-w-4xl' : 'max-w-2xl'}`}>
+          <span className="font-serif text-lg tracking-[0.2em] text-stone-300">
+             {currentQIndex + 1} <span className="text-stone-200">/</span> {QUESTIONS.length}
+          </span>
+          
+          {/* Spacer to balance the flex layout since audio button is removed */}
+          <div className="w-4"></div>
+       </div>
+
+      <div className={`flex-1 flex flex-col justify-center w-full relative z-10 px-6 pb-20 transition-all duration-700 ease-out ${isTransitioning ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}`}>
         
-        {/* Navigation / Progress */}
-        <div className="mb-6 md:mb-12 flex items-center justify-between no-print">
-            <button 
-              onClick={handleBack}
-              disabled={currentQIndex === 0}
-              className={`flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.2em] text-stone-400 hover:text-stone-900 transition-colors duration-300 ${currentQIndex === 0 ? 'opacity-0 pointer-events-none' : ''}`}
-            >
-               <ArrowLeft size={12} /> Return
-            </button>
-            
-            <div className="flex items-center gap-4">
-                <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-stone-300">
-                    {currentQIndex + 1} <span className="text-stone-200">/</span> {QUESTIONS.length}
-                </span>
-                <div className="w-16 md:w-24 h-[1px] bg-stone-200">
-                    <div 
-                        className="h-full bg-stone-900 transition-all duration-700 ease-out"
-                        style={{ width: `${progress}%` }}
-                    ></div>
-                </div>
-            </div>
-        </div>
-
-        {/* Content Container */}
-        <div className={`transition-all duration-500 transform ease-in-out ${isTransitioning ? 'opacity-0 translate-y-8' : 'opacity-100 translate-y-0'}`}>
+        <div className={`mx-auto ${isZodiacQuestion ? 'max-w-4xl' : 'max-w-xl'} w-full`}>
             
             {/* Question */}
-            <h2 className="text-2xl md:text-5xl font-serif text-stone-900 leading-[1.2] md:leading-[1.1] mb-6 md:mb-12 text-center md:text-left animate-fade-in">
-              {currentQuestion.question}
-            </h2>
+            <div className="mb-12 md:mb-16 text-center">
+              <h2 className="text-3xl md:text-5xl font-serif text-stone-900 leading-[1.2] font-light">
+                {currentQuestion.question}
+              </h2>
+            </div>
 
-            {/* Options */}
-            <div className={isZodiacQuestion ? "grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4" : "space-y-3 md:space-y-4"}>
+            {/* Options - List Style / Menu Style */}
+            <div className={isZodiacQuestion ? "grid grid-cols-1 md:grid-cols-2 gap-4" : "flex flex-col border-t border-stone-200"}>
               {currentQuestion.options.map((option, idx) => (
                 <button
                   key={option.id}
                   onClick={() => handleOptionSelect(option)}
-                  className={`group relative bg-white border border-stone-100 hover:border-stone-900 shadow-sm hover:shadow-xl hover:shadow-stone-200/50 transition-all duration-300 rounded-lg overflow-hidden
+                  className={`group w-full text-left transition-all duration-500 ease-out
                     ${isZodiacQuestion 
-                      ? "p-4 flex items-center gap-4 text-left" 
-                      : "w-full p-4 md:p-8 text-left flex items-center justify-between"
+                      ? "p-6 border border-stone-200 hover:border-stone-400 bg-white hover:shadow-sm flex items-center gap-6" 
+                      : "py-6 border-b border-stone-200 hover:pl-4 flex items-baseline justify-between hover:bg-stone-100/30"
                     }`}
-                  style={{ transitionDelay: `${idx * 50}ms` }}
+                  style={{ transitionDelay: `${idx * 100}ms` }}
                 >
                   {isZodiacQuestion ? (
-                    // --- ZODIAC CARD LAYOUT ---
+                    // --- ZODIAC STYLE: Clean Cards ---
                     <>
-                      <div className="text-3xl text-stone-900 font-serif w-12 flex justify-center shrink-0">
-                        {option.symbol}
-                      </div>
-                      <div className="flex flex-col md:flex-row md:items-baseline md:gap-2">
-                        <span className="font-serif text-lg text-stone-900 block">
-                          {option.text}
-                        </span>
-                        <span className="text-[10px] uppercase tracking-wider text-stone-400 font-bold block">
-                          {option.detail}
-                        </span>
+                      <span className="font-serif text-4xl text-stone-800 font-light">{option.symbol}</span>
+                      <div>
+                        <span className="block font-serif text-xl text-stone-900 mb-1">{option.text}</span>
+                        <span className="block text-[10px] uppercase tracking-widest text-stone-400">{option.detail}</span>
                       </div>
                     </>
                   ) : (
-                    // --- STANDARD LIST LAYOUT ---
+                    // --- STANDARD STYLE: Minimal List ---
                     <>
-                       {/* Text */}
-                      <span className="font-reading text-base md:text-xl text-stone-600 group-hover:text-stone-900 transition-colors duration-300 relative z-10 leading-snug">
-                        {option.text}
-                      </span>
-                      
-                      {/* Icon */}
-                      <span className="hidden md:block text-stone-300 group-hover:text-stone-900 transform translate-x-8 group-hover:translate-x-0 opacity-0 group-hover:opacity-100 transition-all duration-300 relative z-10">
-                        <ArrowRight size={20} />
-                      </span>
-                      {/* Mobile Arrow (Always visible but subtle) */}
-                      <span className="md:hidden text-stone-300">
-                        <ArrowRight size={16} />
-                      </span>
+                      <div className="flex items-baseline gap-4">
+                        <span className="text-[10px] font-mono text-stone-300 group-hover:text-stone-500 transition-colors">0{idx + 1}</span>
+                        <span className="font-reading text-lg md:text-xl text-stone-600 group-hover:text-stone-900 transition-colors leading-relaxed">
+                          {option.text}
+                        </span>
+                      </div>
+                      <Minus className="text-stone-300 opacity-0 group-hover:opacity-100 transition-opacity duration-500" strokeWidth={1} size={16} />
                     </>
                   )}
                 </button>
               ))}
             </div>
 
-        </div>
-
-        {/* Footer Note */}
-        <div className="mt-8 md:mt-20 text-center opacity-40">
-           <p className="text-[9px] uppercase tracking-[0.3em] text-stone-500 flex items-center justify-center gap-2">
-             <Sparkles size={10} /> Intuitive Response
-           </p>
         </div>
 
       </div>
