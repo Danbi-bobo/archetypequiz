@@ -237,20 +237,20 @@ export const QUESTIONS: QuizQuestion[] = [
   {
     id: 9,
     stage: 3,
-    question: "Which constellation guides your path?",
+    question: "Select your Zodiac Sign",
     options: [
-      { id: 'aries', text: "Aries", symbol: "♈", detail: "March 21 - April 19" },
-      { id: 'taurus', text: "Taurus", symbol: "♉", detail: "April 20 - May 20" },
-      { id: 'gemini', text: "Gemini", symbol: "♊", detail: "May 21 - June 20" },
-      { id: 'cancer', text: "Cancer", symbol: "♋", detail: "June 21 - July 22" },
-      { id: 'leo', text: "Leo", symbol: "♌", detail: "July 23 - August 22" },
-      { id: 'virgo', text: "Virgo", symbol: "♍", detail: "August 23 - September 22" },
-      { id: 'libra', text: "Libra", symbol: "♎", detail: "September 23 - October 22" },
-      { id: 'scorpio', text: "Scorpio", symbol: "♏", detail: "October 23 - November 21" },
-      { id: 'sagittarius', text: "Sagittarius", symbol: "♐", detail: "November 22 - December 21" },
-      { id: 'capricorn', text: "Capricorn", symbol: "♑", detail: "December 22 - January 19" },
-      { id: 'aquarius', text: "Aquarius", symbol: "♒", detail: "January 20 - February 18" },
-      { id: 'pisces', text: "Pisces", symbol: "♓", detail: "February 19 - March 20" },
+      { id: 'aries', text: "Aries", symbol: "♈", detail: "Mar 21 - Apr 19" },
+      { id: 'taurus', text: "Taurus", symbol: "♉", detail: "Apr 20 - May 20" },
+      { id: 'gemini', text: "Gemini", symbol: "♊", detail: "May 21 - Jun 20" },
+      { id: 'cancer', text: "Cancer", symbol: "♋", detail: "Jun 21 - Jul 22" },
+      { id: 'leo', text: "Leo", symbol: "♌", detail: "Jul 23 - Aug 22" },
+      { id: 'virgo', text: "Virgo", symbol: "♍", detail: "Aug 23 - Sep 22" },
+      { id: 'libra', text: "Libra", symbol: "♎", detail: "Sep 23 - Oct 22" },
+      { id: 'scorpio', text: "Scorpio", symbol: "♏", detail: "Oct 23 - Nov 21" },
+      { id: 'sagittarius', text: "Sagittarius", symbol: "♐", detail: "Nov 22 - Dec 21" },
+      { id: 'capricorn', text: "Capricorn", symbol: "♑", detail: "Dec 22 - Jan 19" },
+      { id: 'aquarius', text: "Aquarius", symbol: "♒", detail: "Jan 20 - Feb 18" },
+      { id: 'pisces', text: "Pisces", symbol: "♓", detail: "Feb 19 - Mar 20" },
     ]
   }
 ];

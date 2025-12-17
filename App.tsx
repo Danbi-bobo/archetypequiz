@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { LandingPage } from './components/LandingPage';
 import { Quiz } from './components/Quiz';
 import { ResultPage } from './components/ResultPage';
-import { AudioPlayer } from './components/AudioPlayer';
 import { QuizResult } from './types';
 
 type ViewState = 'landing' | 'quiz' | 'result';
@@ -30,7 +29,6 @@ function App() {
 
   return (
     <main className="w-full min-h-screen text-stone-800 font-sans selection:bg-primary-light selection:text-primary-dark">
-      <AudioPlayer />
       {view === 'landing' && <LandingPage onStart={handleStart} />}
       {view === 'quiz' && <Quiz onComplete={handleQuizComplete} />}
       {view === 'result' && result && <ResultPage result={result} onRetake={handleRetake} />}
