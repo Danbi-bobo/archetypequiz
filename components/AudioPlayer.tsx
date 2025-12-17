@@ -6,18 +6,28 @@ export const AudioPlayer: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Ambient track: "Relaxing Ambient" - Piano/Drone
-    const audioUrl = "https://cdn.pixabay.com/audio/2022/10/05/audio_68629b35db.mp3"; 
-    audioRef.current = new Audio(audioUrl);
-    audioRef.current.loop = true;
-    audioRef.current.volume = 0.3;
+    // Ambient track: "Valley Sunset" - Relaxing/Ambient
+    // Using a reliable source from Mixkit preview assets as the previous Pixabay link might be expired/invalid.
+    const audioUrl = "https://assets.mixkit.co/music/preview/mixkit-valley-sunset-127.mp3"; 
+    
+    const audio = new Audio(audioUrl);
+    audio.loop = true;
+    audio.volume = 0.3;
+    audioRef.current = audio;
+
+    // Add error listener to catch loading issues
+    audio.addEventListener('error', (e) => {
+      console.warn("Audio failed to load:", e);
+      // Optional: Try a fallback URL if needed, or just fail silently
+      setIsMuted(true);
+    });
 
     // Attempt to play automatically
-    const playPromise = audioRef.current.play();
+    const playPromise = audio.play();
 
     if (playPromise !== undefined) {
       playPromise.catch(error => {
-        // Auto-play was prevented
+        // Auto-play was prevented by browser policy (user hasn't interacted yet)
         console.log("Auto-play prevented by browser policy.");
         setIsMuted(true);
       });
@@ -37,7 +47,7 @@ export const AudioPlayer: React.FC = () => {
     // If the audio is currently paused (e.g. autoplay blocked), 
     // interaction allows us to play it now.
     if (audioRef.current.paused) {
-      audioRef.current.play();
+      audioRef.current.play().catch(e => console.error("Play failed:", e));
       audioRef.current.muted = false;
       setIsMuted(false);
     } else {
