@@ -57,9 +57,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({ onStart }) => {
           </p>
 
           {/* CTA */}
-          <div className="animate-slide-up opacity-0" style={{ animationDelay: '0.4s' }}>
+          <div className="animate-slide-up opacity-0 flex justify-center" style={{ animationDelay: '0.4s' }}>
             <Button onClick={onStart} className="px-12 py-5 text-sm uppercase tracking-[0.15em] font-bold shadow-xl shadow-stone-200/50 hover:shadow-stone-300/50 transition-all duration-500 hover:-translate-y-1 bg-stone-900 text-stone-50 border-stone-900">
-              Begin Assessment
+              Take Quiz
             </Button>
           </div>
         </div>
