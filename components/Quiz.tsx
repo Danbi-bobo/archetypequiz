@@ -89,19 +89,20 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
   // --- BACKGROUND COMPONENT (Reused for both views) ---
   const MysticalBackground = () => (
     <>
-      {/* Deep Charcoal/Brown to Black Gradient */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#2e2a27] via-[#1a1917] to-[#0c0c0c]"></div>
+      {/* Cosmic Background Image */}
+      <div 
+        className="absolute inset-0 z-0 bg-cover bg-center transition-all duration-1000" 
+        style={{ 
+          backgroundImage: `url("background.jpg")`,
+          filter: 'contrast(1.1) brightness(0.7)'
+        }} 
+      />
       
-      {/* Cosmic/Nebula Effects */}
-      <div className="absolute top-0 left-0 w-full h-full z-0 overflow-hidden pointer-events-none">
-        {/* Subtle Gold Shimmer Top Left */}
-        <div className="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vw] bg-amber-900/20 blur-[100px] rounded-full opacity-40 mix-blend-screen animate-breathe"></div>
-        {/* Deep Cosmic Blue/Purple Bottom Right for depth */}
-        <div className="absolute -bottom-[20%] -right-[10%] w-[60vw] h-[60vw] bg-indigo-950/30 blur-[120px] rounded-full opacity-30 mix-blend-screen"></div>
-        
-        {/* Stars/Noise Texture */}
-        <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
-      </div>
+      {/* Dark Overlay/Gradient to ensure text readability */}
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-stone-950/60 via-stone-950/40 to-stone-950/80 pointer-events-none"></div>
+      
+      {/* Subtle Noise Texture on top */}
+      <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` }}></div>
     </>
   );
 
@@ -114,7 +115,7 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
         <div className="max-w-md w-full relative z-10 text-center">
           <div className="mb-12">
              <h2 className="text-4xl md:text-5xl font-serif text-stone-100 mb-6 font-light italic drop-shadow-lg">Your Guide Awaits</h2>
-             <p className="text-stone-400 font-reading leading-relaxed">
+             <p className="text-stone-300 font-reading leading-relaxed drop-shadow-md">
                Enter your email to receive your full energetic blueprint, ritual recommendations, and a copy of your results.
              </p>
           </div>
@@ -124,7 +125,7 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
                <input 
                  type="email" 
                  placeholder="name@example.com"
-                 className="w-full p-4 bg-transparent border-b border-stone-600 focus:border-stone-300 outline-none transition-colors text-stone-100 placeholder:text-stone-600 text-center font-serif text-xl"
+                 className="w-full p-4 bg-transparent border-b border-stone-500 focus:border-white outline-none transition-colors text-stone-100 placeholder:text-stone-400 text-center font-serif text-xl"
                  value={userEmail}
                  onChange={(e) => { setUserEmail(e.target.value); setEmailError(''); }}
                />
@@ -173,8 +174,8 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
              <ArrowLeft size={16} strokeWidth={1} />
           </button>
 
-          <span className="font-serif text-lg tracking-[0.2em] text-stone-600">
-             {currentQIndex + 1} <span className="text-stone-500">/</span> {QUESTIONS.length}
+          <span className="font-serif text-lg tracking-[0.2em] text-stone-400">
+             {currentQIndex + 1} <span className="text-stone-600">/</span> {QUESTIONS.length}
           </span>
           
           {/* Spacer */}
@@ -187,21 +188,21 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
             
             {/* Question - Updated Colors */}
             <div className="mb-12 md:mb-16 text-center">
-              <h2 className="text-3xl md:text-5xl font-serif text-stone-100 leading-[1.2] font-light drop-shadow-lg">
+              <h2 className="text-3xl md:text-5xl font-serif text-stone-100 leading-[1.2] font-light drop-shadow-xl">
                 {currentQuestion.question}
               </h2>
             </div>
 
             {/* Options - Updated Colors for Dark Mode */}
-            <div className={isZodiacQuestion ? "grid grid-cols-1 md:grid-cols-2 gap-4" : "flex flex-col border-t border-white/10"}>
+            <div className={isZodiacQuestion ? "grid grid-cols-1 md:grid-cols-2 gap-4" : "flex flex-col border-t border-white/20"}>
               {currentQuestion.options.map((option, idx) => (
                 <button
                   key={option.id}
                   onClick={() => handleOptionSelect(option)}
                   className={`group w-full text-left transition-all duration-500 ease-out
                     ${isZodiacQuestion 
-                      ? "p-6 border border-white/10 hover:border-stone-500/50 bg-white/5 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] flex items-center gap-6 backdrop-blur-sm" 
-                      : "py-6 border-b border-white/10 hover:pl-4 flex items-baseline justify-between hover:bg-white/5"
+                      ? "p-6 border border-white/10 hover:border-stone-500/50 bg-black/20 hover:bg-white/10 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] flex items-center gap-6 backdrop-blur-sm" 
+                      : "py-6 border-b border-white/20 hover:pl-4 flex items-baseline justify-between hover:bg-white/5"
                     }`}
                   style={{ transitionDelay: `${idx * 100}ms` }}
                 >
@@ -218,12 +219,12 @@ export const Quiz: React.FC<QuizProps> = ({ onComplete }) => {
                     // --- STANDARD STYLE (Dark) ---
                     <>
                       <div className="flex items-baseline gap-4">
-                        <span className="text-[10px] font-mono text-stone-600 group-hover:text-stone-400 transition-colors">0{idx + 1}</span>
-                        <span className="font-reading text-lg md:text-xl text-stone-400 group-hover:text-stone-100 transition-colors leading-relaxed">
+                        <span className="text-[10px] font-mono text-stone-500 group-hover:text-stone-300 transition-colors">0{idx + 1}</span>
+                        <span className="font-reading text-lg md:text-xl text-stone-300 group-hover:text-stone-50 transition-colors leading-relaxed drop-shadow-sm">
                           {option.text}
                         </span>
                       </div>
-                      <Minus className="text-stone-500 opacity-0 group-hover:opacity-100 transition-opacity duration-500" strokeWidth={1} size={16} />
+                      <Minus className="text-stone-400 opacity-0 group-hover:opacity-100 transition-opacity duration-500" strokeWidth={1} size={16} />
                     </>
                   )}
                 </button>
