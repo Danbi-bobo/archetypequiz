@@ -6,10 +6,10 @@ export const AudioPlayer: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
-    // Ambient track: "Valley Sunset" - Relaxing/Ambient
-    // Using a reliable source from Mixkit preview assets as the previous Pixabay link might be expired/invalid.
-    const audioUrl = "https://assets.mixkit.co/music/preview/mixkit-valley-sunset-127.mp3"; 
-    
+    // Using a reliable ambient music from Pixabay CDN
+    // This is a public domain ambient/meditation track suitable for spiritual content
+    const audioUrl = "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=healing-soul-111493.mp3";
+
     const audio = new Audio(audioUrl);
     audio.loop = true;
     audio.volume = 0.3;
@@ -18,7 +18,6 @@ export const AudioPlayer: React.FC = () => {
     // Add error listener to catch loading issues
     audio.addEventListener('error', (e) => {
       console.warn("Audio failed to load:", e);
-      // Optional: Try a fallback URL if needed, or just fail silently
       setIsMuted(true);
     });
 
